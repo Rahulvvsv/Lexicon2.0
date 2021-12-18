@@ -1,0 +1,20 @@
+/* Set the size of the div element that contains the map */
+#map {
+    padding: 50px;
+  height: 400px;
+  width: 400px;
+
+
+
+}
+#googl{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#gog{
+    background-color: aliceblue;
+    border-radius: 5px;
+    
+}
