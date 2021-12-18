@@ -27,6 +27,6 @@ class FarmerUser(models.Model):
 
 class GovempUser(models.Model):
     user = models.OneToOneField(AgriUser,on_delete=models.CASCADE,primary_key=True)
-    Email = EmailField(unique=True,default=None)
+    EmployeeId = models.CharField(max_length = 30,unique=True,default=None)
    
     Address = models.CharField(max_length=100)
