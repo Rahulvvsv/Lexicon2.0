@@ -1,4 +1,5 @@
 from django.db.models.fields import URLField
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import *
 from django.contrib.auth import login, logout, authenticate
@@ -7,6 +8,10 @@ import requests
 from bs4 import BeautifulSoup
 import requests
 import math
+import json
+# import module
+from geopy.geocoders import Nominatim
+
 # Create your views here.
 def index(request):
     return render(request,'agri/index.html')
@@ -121,3 +126,18 @@ def scrape(request):
 
 
     return JsonResponse(array,safe=False)
+
+def scrape_post(request):
+    geolocator = Nominatim(user_agent="geoapiExercises")
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        data = data.get("position")
+        lat = data["lat"]
+        lng = data["lng"]
+        location = geolocator.reverse(str(lat)+","+str(lng))
+        address = location.raw["address"]
+        state = address.get("state","")
+        print(state)
+        return HttpResponse("hello")
+    else:
+        return HttpResponse("hiii")

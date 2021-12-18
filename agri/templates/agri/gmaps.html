@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/maps.css' %}">
     <title>Document</title>
 </head>
+
 <body>
     <div id="googl">
         <div id="gog">
@@ -24,57 +26,90 @@
 </body>
 <script src="{% static 'js/maps.js' %}"></script>
 <script>
-    function initMap(){
+    function initMap() {
         var options = {
-            zoom:4,
-            center:{lat:18.1124,lng:79.0193}
+            zoom: 4,
+            center: { lat: 18.1124, lng: 79.0193 }
         }
-        var map = new google.maps.Map(document.getElementById("map"),options)
+        var map = new google.maps.Map(document.getElementById("map"), options)
         var marker = new google.maps.Marker({
-            position:{lat:17.3850,lng:78.4867},
-            map:map
+            position: { lat: 17.3850, lng: 78.4867 },
+            map: map
         })
         // google.maps.event.addListener(map,'click',function(event){
         //     console.log(event.latLng)
         //     addMarker({coords:event.latLng})
         // });
-        let co_ordinates = [{coords:{lat:11.0598,lng:78.38}},
-                            {coords:{lat:17.123,lng:79.20}},
-                            {coords:{lat:23.473,lng:77.94}},
-                            {coords:{lat:29.238,lng:76.43}},
-                            {coords:{lat:21.2951,lng:81.82}},
-                            {coords:{lat:29.06577,lng:76.04}},
-                            {coords:{lat:25.0698,lng:78.11}},
-                            {coords:{lat:25.79,lng:78.11}},
-                            {coords:{lat:19.06,lng:75.55}},
-                            {coords:{lat:23.74,lng:91.748}},
-                            {coords:{lat:15.317,lng:75.3002}},
-                            {coords:{lat:22.97,lng:87.74}},
-                            {coords:{lat:22.30,lng:72.136}},
-                            {coords:{lat:20.940,lng:84.80}},
-                            {coords:{lat:22.308,lng:72.138}},
-                            {coords:{lat:27.39,lng:73.43}},
-                            {coords:{lat:19.66,lng:75.300}},
-                            {coords:{lat:32.084,lng:77.5711}},
-    ];
-    for(let j of co_ordinates){
-        addMarker(j);
-    }
+        let co_ordinates = [{ coords: { lat: 11.0598, lng: 78.38 } },
+        { coords: { lat: 17.123, lng: 79.20 } },
+        { coords: { lat: 23.473, lng: 77.94 } },
+        { coords: { lat: 29.238, lng: 76.43 } },
+        { coords: { lat: 21.2951, lng: 81.82 } },
+        { coords: { lat: 29.06577, lng: 76.04 } },
+        { coords: { lat: 25.0698, lng: 78.11 } },
+        { coords: { lat: 25.79, lng: 78.11 } },
+        { coords: { lat: 19.06, lng: 75.55 } },
+        { coords: { lat: 23.74, lng: 91.748 } },
+        { coords: { lat: 15.317, lng: 75.3002 } },
+        { coords: { lat: 22.97, lng: 87.74 } },
+        { coords: { lat: 22.30, lng: 72.136 } },
+        { coords: { lat: 20.940, lng: 84.80 } },
+        { coords: { lat: 22.308, lng: 72.138 } },
+        { coords: { lat: 27.39, lng: 73.43 } },
+        { coords: { lat: 19.66, lng: 75.300 } },
+        { coords: { lat: 32.084, lng: 77.5711 } },
+        ];
+        for (let j of co_ordinates) {
+            addMarker(j);
+        }
         // addMarker({coords:{lat:11.0598,lng:78.38}})
 
         // addMarker({coords:{lat:11.0598,lng:78.38}})
 
-        function addMarker(props){
+        function addMarker(props) {
             var marker = new google.maps.Marker({
-                position:props.coords,
-                map:map,
+                position: props.coords,
+                map: map,
             })
-            marker.addListener('click',()=>{console.log("cliked on mes")})
+            marker.addListener('click', () => {
+                let data = JSON.stringify({
+                   position:props.coords
+                })
+                let csrftoken = getCookie('csrftoken');
+                let response = fetch("/scrape_post", {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json',
+                        "X-CSRFToken": csrftoken
+                    },
+                })
+                console.log("sent")
+            })
         }
     }
+
+
+
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 </script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1AI90Dkd-EuruYfEmTxK7rflII6K360I&callback=initMap&libraries=&v=weekly"
-      async
-    ></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1AI90Dkd-EuruYfEmTxK7rflII6K360I&callback=initMap&libraries=&v=weekly"
+    async></script>
+
 </html>
