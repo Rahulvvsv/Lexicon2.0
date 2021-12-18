@@ -7,3 +7,19 @@
     height: 100%;
     width:100%;
 }
+
+#bulliten{
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color:rgb(250, 237, 232);
+
+}
+.bull{
+    font-family: 'Nunito', sans-serif;
+    list-style: none;
+    font-size: 20px;
+    color: black;
+
+}

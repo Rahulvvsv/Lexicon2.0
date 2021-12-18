@@ -1,6 +1,9 @@
 from django.shortcuts import redirect, render
 from .models import *
 from django.contrib.auth import login, logout, authenticate
+from django.http import JsonResponse
+import requests
+from bs4 import BeautifulSoup
 # Create your views here.
 def index(request):
     return render(request,'agri/index.html')
@@ -53,3 +56,19 @@ def resitration(request):
 
 def maps(request):
     return render(request,"agri/gmaps.html")
+
+
+def scrape(request):
+    agriculture_url = "https://economictimes.indiatimes.com/news/economy/agriculture"
+    data = requests.get(agriculture_url)
+    soup = BeautifulSoup(data.content,"html5lib")
+    data_div = soup.find("div",attrs={"class":"tabdata"})
+    data_div2 = data_div.find_all("div",attrs={"class":"eachStory"})
+    array = list()
+    for i in data_div2:
+        data = i.find("h3")
+        data = data.find("a")
+        array.append([data.text,data['href']])
+
+
+    return JsonResponse(array,safe=False)
