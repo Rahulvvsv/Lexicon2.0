@@ -46,10 +46,11 @@ state_choice = (
 
 class Crop(models.Model):
     name = models.CharField(max_length=100)
+    crop_info = models.TextField(max_length=3000)
     season = MultiSelectField(choices=season_choice,max_length=50)
     state = MultiSelectField(choices=state_choice,max_length=200)
     price = models.IntegerField()
-    arrivals = models.DateTimeField(default=datetime.now,blank=True)
+    photo = models.ImageField(blank=True,null=True,upload_to='images/')
     pesticides = models.CharField(max_length=100)
     fertilizers = models.CharField(max_length=100)
     seed = models.CharField(max_length=100)
