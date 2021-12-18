@@ -48,6 +48,7 @@ class Crop(models.Model):
     name = models.CharField(max_length=100)
     crop_info = models.TextField(max_length=3000)
     season = MultiSelectField(choices=season_choice,max_length=50)
+    climate = models.TextField(max_length=2000)
     state = MultiSelectField(choices=state_choice,max_length=200)
     price = models.IntegerField()
     photo = models.ImageField(blank=True,null=True,upload_to='images/')
@@ -55,6 +56,7 @@ class Crop(models.Model):
     fertilizers = models.CharField(max_length=100)
     seed = models.CharField(max_length=100)
     soil_health = models.CharField(max_length=100)
+    soil_info = models.TextField(max_length=1000)
     
     def __str__(self):
         return self.name
