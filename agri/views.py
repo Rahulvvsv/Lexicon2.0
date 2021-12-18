@@ -7,3 +7,6 @@ def index(request):
 
 def login(request):
     return render(request,"agri/login.html")
+
+def maps(request):
+    return render(request,"agri/gmaps.html")
