@@ -58,7 +58,7 @@ def resetPassword(request):
     newpass = request.POST['pass']
     user = User.objects.filter(username = uname).first()
     if(user.password == password):
-        user.set_password(password)
+        user.set_password(newpass)
         redirect("/")
 
 def weatherFore(request):
