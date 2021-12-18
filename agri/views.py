@@ -13,9 +13,9 @@ def login(request):
         user = authenticate(username = uname,password = password)
         if user is not None:
             login(request,user)
-            return redirect('landingpage')
+            return redirect('login')
         else:
-           return redirect('landingpage')
+           return redirect('login')
     return render(request,"agri/login.html")
 #logout
 def logout(request):
