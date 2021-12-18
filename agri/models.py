@@ -1,8 +1,9 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,User
+from django.db.models.aggregates import Max
 from django.db.models.base import Model
-from django.db.models.deletion import CASCADE
+from django.db.models.deletion import CASCADE, DO_NOTHING
 from django.db.models.fields import EmailField
 from django.db.models.fields.related import ForeignKey, OneToOneField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -60,3 +61,9 @@ class Crop(models.Model):
     
     def __str__(self):
         return self.name
+
+class Training(models.Model):
+    crop = models.ForeignKey(Crop,on_delete=DO_NOTHING)
+    vurl = models.CharField(max_length=150)
+    desciption = models.CharField(max_length=1500)
+    doc = models.FileField(default=None,upload_to = "/images")
