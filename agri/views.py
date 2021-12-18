@@ -1,6 +1,9 @@
+from django.db.models.fields import URLField
 from django.shortcuts import redirect, render
 from .models import *
 from django.contrib.auth import login, logout, authenticate
+import requests
+import math
 # Create your views here.
 def index(request):
     return render(request,'agri/index.html')
@@ -49,6 +52,52 @@ def resitration(request):
     return render(request,"agri/register.html")
 
 
+def resetPassword(request):
+    uname = request.POST['uname']
+    password = request.POST['pass']
+    newpass = request.POST['pass']
+    user = User.objects.filter(username = uname).first()
+    if(user.password == password):
+        user.set_password(password)
+        redirect("/")
+
+def weatherFore(request):
+    #if request.method == 'POST':
+    #city_name = request.POST['city']
+    city_name = "hyderabad"
+    app_key = 'd15cab1ad9a0e88a273223c23d953c22'
+    url = f"http://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={app_key}"
+    data_set = requests.get(url).json()
+    context = {
+            "city_name":data_set["city"]["name"],
+            "city_country":data_set["city"]["country"],
+            "wind":data_set['list'][0]['wind']['speed'],
+            "degree":data_set['list'][0]['wind']['deg'],
+            "status":data_set['list'][0]['weather'][0]['description'],
+            "cloud":data_set['list'][0]['clouds']['all'],
+            "date":data_set['list'][0]["dt_txt"],
+            "date1":data_set['list'][1]["dt_txt"],
+            "date2":data_set['list'][2]['dt_txt'],
+            "date3":data_set['list'][3]['dt_txt'],
+            
+            "temp":round(data_set["list"][0]["main"]["temp"]-273),
+            "temp_min1":math.floor(data_set["list"][1]["main"]["temp_min"]-273),
+            "temp_max1":math.ceil(data_set["list"][1]["main"]["temp_max"]-273),
+            "temp_min2":math.floor(data_set["list"][2]["main"]["temp_min"]-273),
+            "temp_max2":math.ceil(data_set["list"][2]["main"]["temp_max"]-273),
+            "temp_min3":math.floor(data_set["list"][3]["main"]["temp_min"]-273),
+            "temp_max3":math.ceil(data_set["list"][3]["main"]["temp_max"]-273),
+            
+            "pressure":data_set["list"][0]["main"]["pressure"],
+            "humidity":data_set["list"][0]["main"]["humidity"],
+            "sea_level":data_set["list"][0]["main"]["sea_level"],
+            
+            
+
+
+        }
+    print(context["city_name"])
+    return render(request,'agri/weather.html',context)
 
 
 def maps(request):
