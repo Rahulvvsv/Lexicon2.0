@@ -6,4 +6,8 @@ def index(request):
 
 
 def login(request):
+    if request.method == "POST":
+        username = request.POST['uname']
+        password = request.POST['pass']
+        
     return render(request,"agri/login.html")

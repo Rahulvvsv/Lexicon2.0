@@ -6,7 +6,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import EmailField
 from django.db.models.fields.related import ForeignKey, OneToOneField
 from phonenumber_field.modelfields import PhoneNumberField
-# Create your models here.
+
 # class User(AbstractBaseUser):
 #     fullname = models.CharField(max_length=30,unique=True)
 #     phone = PhoneNumberField(default = None)
