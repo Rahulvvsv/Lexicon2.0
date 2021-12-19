@@ -155,6 +155,9 @@ def scrape(request):
 
     return JsonResponse(array,safe=False)
 
+data_dict = {"Telangana":'TS',"Tamil Nadu":"TN","Karnataka":"KA"}
+state = ""
+
 def scrape_post(request):
     geolocator = Nominatim(user_agent="geoapiExercises")
     if request.method == "POST":
