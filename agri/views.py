@@ -350,3 +350,12 @@ def addcrop(request):
     return render(request, "agri/addcrop.html")
 
 
+
+def tpa(request,id):
+    crop = Crop.objects.filter(id = id).first()
+    train = Training.objects.filter(crop = crop).first()
+    context = {
+    'train':train,
+    
+    }
+    return render(request,"agri/tpa.html",context)

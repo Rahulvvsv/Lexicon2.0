@@ -22,13 +22,14 @@
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h2>Overview</h2>
-      <img src="{{data.photo.url}}" >
+      <img src="{{data.photo.url}}" height="250" width="250" >
       <p><strong>Crop-Name:</strong>{{data.name}}</p>
       <p><strong>Season:</strong>{{data.season}}</p>
       <p><strong>price:</strong>{{data.price}}</p>
       <p><strong>pesticides:</strong>{{data.pesticides}}</p>
       <p><strong>fertilizers:</strong>{{data.fertilizers}}</p>
       <p><strong>soil-health:</strong>{{data.soil_health}}</p>
+      <p><a href="{% url 'tpa' data.id %}">Click here to check trainings.</a></p>
     </div>
     <div id="menu1" class="tab-pane fade">
       <h2>{{data.name}}</h2>
