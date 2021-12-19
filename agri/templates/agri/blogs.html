@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+      <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Piedra&display=swap" rel="stylesheet">
+    <title>Blogs</title>
+
+  </head>
+  <body>
+
+      <div class="container">
+        <div class="jumbotron" id='welcome'>
+          <h1>Welcome {{user.username}}</h1>
+                <h6>Make new stories in NewPost</h6>
+                <h6>Your stories are stored in drafts</h6>
+                <small>You can publilsh from there</small>
+
+
+        </div>
+        <hr>
+        <div id='rahul'>
+            <h1  >Your Posts:</h1>
+        </div>
+
+            <div class="container" id='user-posts'>
+  <div class="jumbotron" id='posts'>
+      <ol>
+    {% for stud in objects %}
+
+
+
+        <li>
+          <form method="post" action="{% url 'publish' pk=stud.id %}">
+                    {% csrf_token %}
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Author</label>
+            <div class="col-sm-10">
+              <input type="text" name = "user" readonly class="form-control" id="staticEmail" value={{user.username}} >
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text"  readonly class="form-control" id="staticEmail" name='title' value={{stud.title}}>
+            </div>
+          </div>
+          <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Text</label>
+              <div class="col-sm-10">
+              <textarea name="story" readonly rows="8" cols="80" class='form-control' id='story' >{{stud.story}}</textarea>
+              </div>
+          </div>
+          <div class="form-group row">
+            {% if stud.publish  %}
+            <div class="col-lg-4">
+              <input type="submit" name=""  disabled class='btn btn-dark' value="Published">
+            </div>
+            {% else %}
+              <div class="col-lg-4">
+                <input type="submit" name="" class='btn btn-primary'value="Publish">
+              </div>
+              {% endif %}
+          </div>
+        </form>
+      </li>
+
+    <hr>
+      {% endfor %}
+    </ol>
+
+
+    </div>
+
+  </div>
+          </body>
+          </html>

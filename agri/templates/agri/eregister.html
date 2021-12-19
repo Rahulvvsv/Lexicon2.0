@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,15 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="{% static 'css/log.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -69,11 +64,56 @@
           {%endif%}
         </div>
       </nav>
-          {% block content %}
-    {% endblock %}
+    <div class="container">
+        <h1 style="text-align: center;">Employee Registration</h1>
+    <form class="row g-3" method="post" >
+    {% csrf_token %}
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">FirstName</label>
+          <input type="text" name = "fname" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">LastName</label>
+          <input type="text" name = "lname" class="form-control" id="inputPassword4">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Username</label>
+          <input type="text" name = "uname" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">password</label>
+          <input type="password" name="password" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="col-12">
+            <label for="inputAddress2" class="form-label">re enter password</label>
+            <input type="password" name="rpassword" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="col-12">
+            <label for="inputAddress2" class="form-label">phone</label>
+            <input type="text" name="phone" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">EmployeeId</label>
+            <input type="text" name="empId" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
 
+    
+
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">Address</label>
+          <input type="text"  name = "address" class="form-control" id="inputCity">
+        </div>
+        
+      
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+      </form>
+    </div>
 </body>
 <script src="{% static 'js/index.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 </html>

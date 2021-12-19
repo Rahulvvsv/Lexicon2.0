@@ -11,7 +11,12 @@ urlpatterns = [
     path("scrape_post",views.scrape_post,name="scrape_post"),
     path("log",views.logingout,name="logout"),
     path("dtail/<int:id>",views.dtail,name="dtail"),
-    path("register",views.regist,name="eregister"),
-    path("deregis",views.degrig,name="uregister")
+    path("farmer",views.registration,name="uregister"),
+    path("log",views.eregistration,name="eregister"),
+    path("landing",views.landing,name="landing"),
+    path('blogs/',views.postmaker,name='blogs'),
+    path('newpost/',views.newposter,name='poster'),
+    path('blogs/publish/<int:pk>/',views.publish,name='publish'),
+    path('blogs/newpost/comment/<int:pk>/',views.comments,name='comments'),
 ]
 

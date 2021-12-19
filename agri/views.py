@@ -4,17 +4,25 @@ from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import *
 from django.contrib.auth import login, logout, authenticate
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponseRedirect
+from django.urls import reverse
 import requests
 from bs4 import BeautifulSoup
 import requests
 import math
 import json
 from .models import Crop
+from django.contrib.auth.decorators import login_required
 # import module
 from geopy.geocoders import Nominatim
-from .models import Crop
+from .models import *
+from .forms import *
 
+
+def landing(request):
+    objects = PublishUser.objects.order_by('-id')
+    context ={'lists':objects}
+    return render(request,'agri/landing.html',context)
 # Create your views here.
 def index(request):
     data = Crop.objects.all()
@@ -22,7 +30,7 @@ def index(request):
     'user':request.user,
     'data' : data
     }
-    return render(request,'agri/index.html',context)
+    return render(request,'agri/home.html',context)
 def dtail(request,id):
     data = Crop.objects.filter(id = id).first()
     context = {
@@ -167,20 +175,153 @@ def scrape_post(request):
                 if j == state:
                     array.append(j)
         print(state,array)
-        return HttpResponse("hello")
+        
+        return render(request,"agri/gmaps.html",{"state":state})
     else:
         return HttpResponse("hiii")
     
 
-def regist(request):
-    pass
+def registration(request):
+    if request.method == "POST":
+        print("inside post")
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        username = request.POST['uname']
+        password = request.POST['password']
+        rpassword = request.POST['rpassword']
+        print(first_name)
+        user = User(username = username,first_name = first_name,last_name = last_name)
+        if password == rpassword:
+            user.set_password(password)
+            user.save()
+        else:
+            return redirect('uregister')
+        phone = request.POST['phone']
+        auser = AgriUser(user = user,phone =phone,is_farmer = True )
+        auser.save()
+   
+        adhaar = request.POST['adhaar']
+        village = request.POST['village']
+        district = request.POST['district']
+        state = request.POST['state']
+        fuser = FarmerUser(user = user,adhaar = adhaar,village = village,district = district,state = state)
+        fuser.save()
+        return redirect('home')
+       
+    return render(request,"agri/register.html")
 
-def degrig(request):
-    pass
+def eregistration(request):
+    if request.method == "POST":
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        username = request.POST['uname']
+        password = request.POST['password']
+        rpassword = request.POST['rpassword']
+        user = User(username = username,first_name = first_name,last_name = last_name)
+        if password == rpassword:
+            user.set_password(password)
+            user.save()
+        else:
+            return redirect('register')
+        phone = request.POST['phone']
+        auser = AgriUser(user = user,phone =phone,is_Employee = True )
+        auser.save()
+    
 
+        EmpId = request.POST["empId"]
+        address = request.POST['address']
+        euser = GovempUser(user = user,EmployeeId = EmpId,Address = address)
+        euser.save()
+        return redirect('/')
+    return render(request,"agri/eregister.html")
+
+    
 def dtail(request,id):
     data = Crop.objects.filter(id = id).first()
     context = {
         'data':data
     }
     return render(request,"agri/cropManagement.html",context)
+
+
+@login_required
+def postmaker(request):
+
+    pk = request.user.id
+    model = User.objects.get(id=pk)
+    model1 = model.stories.order_by('-id')
+    print(model)
+    context = {'objects':model1}
+
+    return render(request,'agri/blogs.html',context)
+
+@login_required
+def newposter(request):
+    if request.method == "POST":
+        
+        form = BlogContent1Form(request.POST)
+        print('hello1')
+        if form.is_valid():
+            print('hello2')
+
+            # form.user=user
+            # form.save()
+            user1= request.user
+
+            user = User.objects.get(id=user1.id)
+            # user = request.user.userna
+            title = form.cleaned_data['title']
+            story = form.cleaned_data['story']
+
+
+            print('hello3')
+
+            form11 = BlogContent11(user=user,title=title,story=story)
+
+            print('hello4')
+            form11.save()
+            print('hello5')
+            return HttpResponseRedirect(reverse('landing'))
+        else:
+            print(form.errors)
+    return render(request,'agri/newpost.html')
+
+def publish(request,pk):
+    content = BlogContent11.objects.get(id=pk)
+
+    print('hello')
+    if request.method == "POST":
+        print('hello')
+        author = request.POST['user']
+        title = request.POST['title']
+        story = request.POST['story']
+        model = PublishUser(author=author,title=title,story=story)
+        model.save()
+        content = BlogContent11.objects.get(id=pk)
+        content.publish = True
+        content.save()
+
+
+        return HttpResponseRedirect(reverse('landing'))
+
+
+def comments(request,pk):
+    if request.method == 'POST':
+        form = CommentForms( request.POST)
+        if form.is_valid():
+
+            content = form.cleaned_data['comment']
+
+            user = PublishUser.objects.get(id=pk)
+
+            model = CommentUser(post=user,comment=content)
+            model.save()
+
+            return HttpResponseRedirect(reverse('landing'))
+        else:
+            print(form.errors)
+            return HttpResponse("Comment Failed1")
+
+    else:
+        return HttpResponse("Comment Failed")
+

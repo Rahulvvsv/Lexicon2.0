@@ -67,3 +67,27 @@ class Training(models.Model):
     vurl = models.CharField(max_length=150)
     desciption = models.CharField(max_length=1500)
     doc = models.FileField(default=None,upload_to = "images/")
+
+
+
+class BlogContent11(models.Model):
+        # id = models.BigIntegerField(primary_key = True)
+        user  = models.ForeignKey(User,related_name='stories',on_delete=models.CASCADE)
+        title = models.CharField(max_length = 50)
+        story = models.CharField(max_length=5000)
+        def __str__(self):
+            return self.user.username
+
+
+class PublishUser(models.Model):
+    title = models.CharField(max_length = 50)
+    story = models.CharField(max_length=5000)
+    author = models.CharField(max_length=100)
+    def __str__(self):
+        return self.title
+
+class CommentUser(models.Model):
+    post = models.ForeignKey(PublishUser,on_delete=models.CASCADE)
+    comment = models.CharField(max_length=100)
+    def __str__(self):
+        return self.post.title
