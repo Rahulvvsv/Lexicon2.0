@@ -50,7 +50,9 @@
                 {% for a in data %}
                   <a class="dropdown-item" href="{% url 'dtail' a.id %}">{{a.name}}</a>
                   {% endfor %}
-                <a class="dropdown-item" href="#">Another action</a>
+                {% if auser.is_Employee %}
+                <a class="dropdown-item" href="{% url 'cropadd' %}">Add Crop</a>
+                {%endif%}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
               </div>
