@@ -38,11 +38,11 @@ season_choice = (
 )
 
 state_choice = (
-    ('TS','Telangana'),
-    ('AP','AndhraPradesh'),
-    ('TN','Tamilnaidu'),
-    ('KA','Karnataka'),
-    ('MH','Maharastra'),
+    ('Telangana','Telangana'),
+    ('Andhra Pradesh','Andhra Pradesh'),
+    ('Tamil Nadu','Tamil Nadu'),
+    ('Karnataka','Karnataka'),
+    ('Maharastra','Maharastra'),
 )
 
 class Crop(models.Model):
