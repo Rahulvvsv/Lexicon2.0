@@ -1,3 +1,4 @@
+from os import stat
 from django.db.models.fields import URLField
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -11,6 +12,7 @@ import math
 import json
 # import module
 from geopy.geocoders import Nominatim
+from .models import Crop
 
 # Create your views here.
 def index(request):
@@ -137,7 +139,16 @@ def scrape_post(request):
         location = geolocator.reverse(str(lat)+","+str(lng))
         address = location.raw["address"]
         state = address.get("state","")
-        print(state)
+        dataa = Crop.objects.all()
+        print(dataa)
+        array = list()
+        for i in dataa:
+            print("state",state,"i.states",i.state,type(i.state))
+            for j  in i.state:
+                print(j)
+                if j == state:
+                    array.append(j)
+        print(state,array)
         return HttpResponse("hello")
     else:
         return HttpResponse("hiii")

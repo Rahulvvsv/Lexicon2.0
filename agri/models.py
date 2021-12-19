@@ -38,11 +38,11 @@ season_choice = (
 )
 
 state_choice = (
-    ('TS','Telangana'),
-    ('AP','AndhraPradesh'),
-    ('TN','Tamilnaidu'),
-    ('KA','Karnataka'),
-    ('MH','Maharastra'),
+    ('Telangana','Telangana'),
+    ('Andhra Pradesh','Andhra Pradesh'),
+    ('Tamil Nadu','Tamil Nadu'),
+    ('Karnataka','Karnataka'),
+    ('Maharastra','Maharastra'),
 )
 
 class Crop(models.Model):
@@ -50,7 +50,7 @@ class Crop(models.Model):
     crop_info = models.TextField(max_length=3000)
     season = MultiSelectField(choices=season_choice,max_length=50)
     climate = models.TextField(max_length=2000)
-    state = MultiSelectField(choices=state_choice,max_length=200)
+    state = MultiSelectField(choices=state_choice,max_length=200,default="Telangana")
     price = models.IntegerField()
     photo = models.ImageField(blank=True,null=True,upload_to='images/')
     pesticides = models.CharField(max_length=100)
