@@ -169,8 +169,12 @@ def cropss(request):
         print("state",state1,"i.states",i.state,type(i.state))
         for j  in i.state:
             print(j)
+            array.append(state1)
             if state1 == j:
-                array.append(j)
+                array=[]
+                array.append(state1)
+
+                
                 array.append(i.name)
                 array.append(i.fertilizers)
                 array.append(i.pesticides)

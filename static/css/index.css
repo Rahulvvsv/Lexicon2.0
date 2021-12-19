@@ -83,3 +83,19 @@ body{
 #luhar{
   font-family: 'Piedra', cursive;
 }
+.hm-place{
+    position: absolute;
+    top: 24%;
+    left: 12%;
+    width: 80%;
+    /* margin-left: 250px; */
+    font-size: 2vw;
+  }
+  .hm-place{
+    position: absolute;
+    top:25%;
+    left:20%;
+    /* margin-left: 250px; */
+    font-size: 2vh;
+    self-align:center;
+  }
