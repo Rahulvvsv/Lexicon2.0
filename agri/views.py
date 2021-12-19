@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import requests
 import math
 import json
+from .models import Crop
 # import module
 from geopy.geocoders import Nominatim
 
@@ -137,7 +138,17 @@ def scrape_post(request):
         location = geolocator.reverse(str(lat)+","+str(lng))
         address = location.raw["address"]
         state = address.get("state","")
-        print(state)
-        return HttpResponse("hello")
+        dataa = Crop.objects.all()
+        print(dataa)
+        array = list()
+        for i in dataa:
+            print("state",state,"i.states",i.state,type(i.state))
+            for j  in i.state:
+                print(j)
+                if j == state:
+                    array.append(j)
+        print(state,array)
+        return render(request,'agri/gmaps.html',data)
     else:
         return HttpResponse("hiii")
+    
