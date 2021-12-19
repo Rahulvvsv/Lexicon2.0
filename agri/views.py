@@ -17,7 +17,18 @@ from .models import Crop
 
 # Create your views here.
 def index(request):
-    return render(request,'agri/index.html')
+    data = Crop.objects.all()
+    context = {
+    'user':request.user,
+    'data' : data
+    }
+    return render(request,'agri/index.html',context)
+def dtail(request,id):
+    data = Crop.objects.filter(id = id).first()
+    context = {
+        'data':data
+    }
+    return render(request,"agri/cropManagement.html",context)
 
 #login
 def user_login(request):
@@ -72,18 +83,11 @@ def resitration(request):
             EmpId = request.POST["empId"]
             address = request.POST['address']
             euser = GovempUser(user = user,EmployeeId = EmpId,Address = address)
+            euser.save()
             return redirect('/')
     return render(request,"agri/register.html")
 
 
-def resetPassword(request):
-    uname = request.POST['uname']
-    password = request.POST['pass']
-    newpass = request.POST['pass']
-    user = User.objects.filter(username = uname).first()
-    if(user.password == password):
-        user.set_password(newpass)
-        redirect("/")
 
 def weatherFore(request):
     #if request.method == 'POST':
@@ -174,5 +178,9 @@ def regist(request):
 def degrig(request):
     pass
 
-def dtail(request):
-    pass
+def dtail(request,id):
+    data = Crop.objects.filter(id = id).first()
+    context = {
+        'data':data
+    }
+    return render(request,"agri/cropManagement.html",context)
