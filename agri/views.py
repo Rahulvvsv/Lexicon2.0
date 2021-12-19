@@ -19,6 +19,7 @@ from .models import *
 from .forms import *
 
 
+
 def landing(request):
     objects = PublishUser.objects.order_by('-id')
     context ={'lists':objects}
@@ -26,10 +27,19 @@ def landing(request):
 # Create your views here.
 def index(request):
     data = Crop.objects.all()
-    context = {
-    'user':request.user,
-    'data' : data
-    }
+    user=request.user
+    if user.is_authenticated:
+        auser = AgriUser.objects.filter(user=user).first()
+        context = {
+        'auser' : auser,
+        'user' : user,
+        'data' : data
+        }
+    else:
+        context = {
+       
+        'data' : data
+        }
     return render(request,'agri/home.html',context)
 def dtail(request,id):
     data = Crop.objects.filter(id = id).first()
@@ -68,32 +78,6 @@ def logingout(request):
     logout(request)
     return redirect('home')
 
-#Registration
-def resitration(request):
-    if request.method == "POST":
-        first_name = request.POST['fname']
-        last_name = request.POST['lname']
-        username = request.POST['uname']
-        password = request.POST['password']
-        user = User(username = username,first_name = first_name,last_name = last_name)
-        user.set_password(password)
-        user.save()
-        utype = request.POST['type']
-        if utype == 'farmer':
-            adhaar = request.POST['adhaar']
-            village = request.POST['village']
-            district = request.POST['district']
-            state = request.POST['state']
-            auser = AgriUser(user = user,adhaar = adhaar,village = village,district = district,state = state)
-            auser.save()
-            return redirect('/')
-        if utype == 'govt':
-            EmpId = request.POST["empId"]
-            address = request.POST['address']
-            euser = GovempUser(user = user,EmployeeId = EmpId,Address = address)
-            euser.save()
-            return redirect('/')
-    return render(request,"agri/register.html")
 
 
 
@@ -133,7 +117,7 @@ def weatherFore(request):
 
         }
     print(context)
-    return render(request,'agri/weather.html',context)
+    return JsonResponse(json.dumps(context),safe=False)
 
 
 def maps(request):
@@ -210,7 +194,7 @@ def registration(request):
         else:
             return redirect('uregister')
         phone = request.POST['phone']
-        auser = AgriUser(user = user,phone =phone,is_farmer = True )
+        auser = AgriUser(user = auser,phone =phone,is_farmer = True )
         auser.save()
    
         adhaar = request.POST['adhaar']
@@ -219,7 +203,7 @@ def registration(request):
         state = request.POST['state']
         fuser = FarmerUser(user = auser,adhaar = adhaar,village = village,district = district,state = state)
         fuser.save()
-        return redirect('home')
+        return redirect('login')
        
     return render(request,"agri/register.html")
 
@@ -245,7 +229,7 @@ def eregistration(request):
         address = request.POST['address']
         euser = GovempUser(user = auser,EmployeeId = EmpId,Address = address)
         euser.save()
-        return redirect('/')
+        return redirect('login')
     return render(request,"agri/eregister.html")
 
     
@@ -337,4 +321,32 @@ def comments(request,pk):
 
     else:
         return HttpResponse("Comment Failed")
+
+
+
+@login_required(login_url = 'login')
+def addcrop(request):
+    
+
+    if request.method == "POST":
+            cropname = request.POST['cropname']
+            season = request.POST['season']
+            crop_info = request.POST['crop_info']
+            climate = request.POST['climate']
+            states = request.POST['states']
+            price = request.POST['price']
+            photo = request.POST['photo']
+            pesticides = request.POST['pest']
+            fertilizers =request.POST['fert']
+            seed = request.POST['seed']
+            soil_health = request.POST['sh']
+            soil_info = request.POST['si']
+            crop = Crop(name = cropname,crop_info = crop_info,season = season,climate = climate,state = states,price = price,
+                photo = photo,pesticides = pesticides,fertilizers = fertilizers,seed  = seed,soil_health = soil_health,soil_info = soil_info )
+            crop.save()
+
+            return redirect('/')
+    
+    return render(request, "agri/addcrop.html")
+
 

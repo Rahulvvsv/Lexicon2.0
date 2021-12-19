@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    {{data.name}}
+
+<div class="container">
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Overview</a></li>
+    <li><a data-toggle="tab" href="#menu1">Description</a></li>
+    <li><a data-toggle="tab" href="#menu2">soil&climate</a></li>
+    <li><a data-toggle="tab" href="#menu3">fertilizers&pesticides</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h2>Overview</h2>
+      <img src="{{data.photo.url}}" >
+      <p><strong>Crop-Name:</strong>{{data.name}}</p>
+      <p><strong>Season:</strong>{{data.season}}</p>
+      <p><strong>price:</strong>{{data.price}}</p>
+      <p><strong>pesticides:</strong>{{data.pesticides}}</p>
+      <p><strong>fertilizers:</strong>{{data.fertilizers}}</p>
+      <p><strong>soil-health:</strong>{{data.soil_health}}</p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h2>{{data.name}}</h2>
+      <p>{{data.crop_info}}</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h2>Soil & climate</h2>
+      <h3>Soil information</h3>
+      <p>{{data.soil_info}}</p><br><hr>
+      <h3>climate information</h3>
+      <p>{{data.climate}}</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h2>Fertilizers & Pesticides</h2>
+      <h3>Fertilizers</h3>
+      <p>{{data.fertilizers}}</p><br><hr>
+      <h3>Pesticides</h3>
+      <p>{{data.pesticides}}</p>
+
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
