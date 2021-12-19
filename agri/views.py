@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 import requests
 import math
 import json
+from .models import Crop
 # import module
 from geopy.geocoders import Nominatim
 from .models import Crop
@@ -19,21 +20,34 @@ def index(request):
     return render(request,'agri/index.html')
 
 #login
-def login(request):
+def user_login(request):
+    print("hello")
     if request.method == "POST":
+        print("hellllllll")
         uname = request.POST['uname']
         password = request.POST['pwd']
-        user = authenticate(username = uname,password = password)
-        if user is not None:
-            login(request,user)
-            return redirect('login')
+        
+        print(uname)
+        print(password)
+        user = authenticate(request,username = uname,password = password)
+        if user:
+
+            if user.is_active:
+                login(request,user)
+                print("login succussful")
+                return redirect('home')
+            else:
+                return HttpResponse("somethin went wrong")
         else:
-           return redirect('login')
-    return render(request,"agri/login.html")
+            print("someone tried to login and failed ")
+            print(f"Username :{username} and password :{password}")
+            return HttpResponse("Invalid login credentials")
+    else:
+        return render(request,"agri/login.html")
 #logout
-def logout(request):
+def logingout(request):
     logout(request)
-    return redirect('landingpage')
+    return redirect('home')
 
 #Registration
 def resitration(request):
@@ -152,3 +166,13 @@ def scrape_post(request):
         return HttpResponse("hello")
     else:
         return HttpResponse("hiii")
+    
+
+def regist(request):
+    pass
+
+def degrig(request):
+    pass
+
+def dtail(request):
+    pass
