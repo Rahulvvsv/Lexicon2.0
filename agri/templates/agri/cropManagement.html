@@ -29,6 +29,7 @@
       <p><strong>pesticides:</strong>{{data.pesticides}}</p>
       <p><strong>fertilizers:</strong>{{data.fertilizers}}</p>
       <p><strong>soil-health:</strong>{{data.soil_health}}</p>
+      <p><a href="{% url 'tpa' data.id %}">Click here to check trainings.</a></p>
     </div>
     <div id="menu1" class="tab-pane fade">
       <h2>{{data.name}}</h2>

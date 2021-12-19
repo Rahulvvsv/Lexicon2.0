@@ -4,7 +4,7 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path('',views.index,name="home"),
-    
+
     path("login",views.user_login,name='login'),
     path("maps",views.maps,name='maps'),
      path("scrape",views.scrape,name='srape'),
@@ -20,5 +20,6 @@ urlpatterns = [
     path('newpost/',views.newposter,name='poster'),
     path('blogs/publish/<int:pk>/',views.publish,name='publish'),
     path('blogs/newpost/comment/<int:pk>/',views.comments,name='comments'),
+    path('tpa/<int:id>',views.tpa,name='tpa'),
 ]
 
