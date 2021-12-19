@@ -20,13 +20,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'maps' %}">Maps</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Blogs</a>
+                <a class="nav-link" href="{% url 'landing' %}">Blogs</a>
               </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,7 +58,7 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
           {% if user.is_authenticated %}
-           <a href="{% url 'logout' %}"><button class="btn btn-outline-success my-2 my-sm-0">Logout</button></a>
+          <a href="{% url 'blogs' %}"><button class="btn btn-outline-success my-2 my-sm-0">{{user.username}}</button></a>
            {%else%}
           <a href="{% url 'login' %}"><button class="btn btn-outline-success my-2 my-sm-0">Login</button></a>
           <a href="{% url 'uregister' %}"><button class="btn btn-outline-success my-2 my-sm-0">Useregister</button></a>
@@ -67,7 +67,7 @@
         </div>
       </nav>
 
-    <section class="vh-100">
+     <section class="vh-100">
         <div class="container-fluid h-custom">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-9 col-lg-6 col-xl-5">
@@ -122,41 +122,7 @@
           </div>
           <!-- Copyright -->
         </div>
-<<<<<<< HEAD
-    </section>
-=======
       </section>
-<<<<<<< HEAD
-    <!-- <div class="login-reg-panel">
-        <form action="." method="post"></form>
-		<div class="login-info-box">
-			<h2>Have an account?</h2>
-			<p>Lorem ipsum dolor sit amet</p>
-			<label id="label-register" for="log-reg-show">Login</label>
-			<input type="radio" name="active-log-panel" id="log-reg-show"  checked="checked">
-		</div>
-							
-		<div class="white-panel">
-			<div class="login-show">
-				<h2>LOGIN</h2>
-				<input type="text" placeholder="uname">
-				<input type="password" placeholder="Pwd">
-				<a href="">Forgot password?</a>
-			</div>
-		</div>
-
-        <div class="register-info-box">
-			<h2>Don't have an account?</h2>
-			<p>Lorem ipsum dolor sit amet</p>
-			<label id="label-login" for="log-login-show">Register</label>
-		</div> -->
-    </form>
-	</div>
-=======
-
-
->>>>>>> ead3c589ec613f70cbc23cafdd3a84cf407b154e
->>>>>>> 3f3017b7dd5b3c419d43402613e78d4346ea8c97
 </body>
 <script src="{% static 'js/index.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

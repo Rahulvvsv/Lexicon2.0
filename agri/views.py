@@ -156,7 +156,7 @@ def scrape(request):
     return JsonResponse(array,safe=False)
 
 data_dict = {"Telangana":'TS',"Tamil Nadu":"TN","Karnataka":"KA"}
-state = ""
+state1 = "Karnataka"
 
 def scrape_post(request):
     geolocator = Nominatim(user_agent="geoapiExercises")
@@ -167,22 +167,32 @@ def scrape_post(request):
         lng = data["lng"]
         location = geolocator.reverse(str(lat)+","+str(lng))
         address = location.raw["address"]
-        state = address.get("state","")
-        dataa = Crop.objects.all()
-        print(dataa)
-        array = list()
-        for i in dataa:
-            print("state",state,"i.states",i.state,type(i.state))
-            for j  in i.state:
-                print(j)
-                if j == state:
-                    array.append(j)
-        print(state,array)
+        global state1
+        state1 = address.get("state","")
+ 
         
-        return render(request,"agri/gmaps.html",{"state":state})
+        
+        return render(request,"agri/gmaps.html")
     else:
         return HttpResponse("hiii")
     
+def cropss(request):
+
+    dataa = Crop.objects.all()
+    print(dataa)
+    array = list()
+    for i in dataa:
+        print("state",state1,"i.states",i.state,type(i.state))
+        for j  in i.state:
+            print(j)
+            if state1 == j:
+                array.append(j)
+                array.append(i.name)
+                array.append(i.fertilizers)
+                array.append(i.pesticides)
+    print(array)
+    return JsonResponse(array,safe=False)
+
 
 def registration(request):
     if request.method == "POST":
@@ -207,7 +217,7 @@ def registration(request):
         village = request.POST['village']
         district = request.POST['district']
         state = request.POST['state']
-        fuser = FarmerUser(user = user,adhaar = adhaar,village = village,district = district,state = state)
+        fuser = FarmerUser(user = auser,adhaar = adhaar,village = village,district = district,state = state)
         fuser.save()
         return redirect('home')
        
@@ -233,7 +243,7 @@ def eregistration(request):
 
         EmpId = request.POST["empId"]
         address = request.POST['address']
-        euser = GovempUser(user = user,EmployeeId = EmpId,Address = address)
+        euser = GovempUser(user = auser,EmployeeId = EmpId,Address = address)
         euser.save()
         return redirect('/')
     return render(request,"agri/eregister.html")

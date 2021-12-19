@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,14 +23,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'maps' %}">Maps</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Blogs</a>
-              </li>
+              <a class="nav-link" href="{% url 'landing' %}">Blogs</a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dropdown
@@ -61,7 +61,7 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
           {% if user.is_authenticated %}
-           <a href="{% url 'logout' %}"><button class="btn btn-outline-success my-2 my-sm-0">Logout</button></a>
+           <a href="{% url 'blogs' %}"><button class="btn btn-outline-success my-2 my-sm-0">{{user.username}}</button></a>
            {%else%}
           <a href="{% url 'login' %}"><button class="btn btn-outline-success my-2 my-sm-0">Login</button></a>
           <a href="{% url 'uregister' %}"><button class="btn btn-outline-success my-2 my-sm-0">Useregister</button></a>

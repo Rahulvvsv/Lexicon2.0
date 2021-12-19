@@ -18,5 +18,6 @@ urlpatterns = [
     path('newpost/',views.newposter,name='poster'),
     path('blogs/publish/<int:pk>/',views.publish,name='publish'),
     path('blogs/newpost/comment/<int:pk>/',views.comments,name='comments'),
+    path("cropss",views.cropss,name="cropps")
 ]
 
