@@ -4,7 +4,7 @@
 Agriculture Web Portal
 
 
-This project is made by me and my friends @RajeshNeelakantam and @KhajaBaba when we participated in Lexicon 2.0 Hackathon.(We didnt win it thogh)
+This project is made by me and my friends  when we participated in Lexicon 2.0 Hackathon.(We didnt win it thogh)
 
 We were supposed to build 16 features but we were able to build 12 of them.
 
